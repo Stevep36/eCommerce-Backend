@@ -17,7 +17,7 @@ export default class Products {
     getProducto (pid) {
         let data = fs.readFileSync(this.name,'utf-8');
         let contenido = JSON.parse(data);
-        return contenido.find((item) => (item.id === parseInt(pid)));
+        return contenido[pid];
     }
 
     async addProduct (product) {

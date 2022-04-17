@@ -35,7 +35,7 @@ productsRouter.get('/:pid?', (req, res) =>{
     }
     else
     res.json({
-       error: -2,
+        error: -2,
         descripcion: `la ruta ${req.originalUrl} con metodo ${req.method} no implementada `
     })
 })
