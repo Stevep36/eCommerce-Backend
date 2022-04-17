@@ -17,12 +17,13 @@ export default class Products {
     getProducto (pid) {
         let data = fs.readFileSync(this.name,'utf-8');
         let contenido = JSON.parse(data);
-        return contenido.find((item) => (item.id === parseInt(pid)));console.log(i);
+        return contenido.find((item) => (item.id === parseInt(pid)));
     }
 
     async addProduct (product) {
         let data = await fs.promises.readFile(this.name,'utf-8');
         let contenido = JSON.parse(data);
+        product.id = contenido.length;
         contenido.push(product);
         await fs.promises.writeFile(this.name,JSON.stringify(contenido,null,'\t'));
 
@@ -31,8 +32,7 @@ export default class Products {
     async updateProduct (pid, product) {
         let data = await fs.promises.readFile(this.name,'utf-8');
         let contenido = JSON.parse(data);
-        contenido = contenido.filter((prod) => (prod.id !== parseInt(pid)));
-        contenido.push(product);
+        contenido[pid]=product;
         await fs.promises.writeFile(this.name,JSON.stringify(contenido,null,'\t'));
     }
 

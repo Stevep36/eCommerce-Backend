@@ -35,7 +35,7 @@ productsRouter.get('/:pid?', (req, res) =>{
     }
     else
     res.json({
-        error: -2,
+       error: -2,
         descripcion: `la ruta ${req.originalUrl} con metodo ${req.method} no implementada `
     })
 })
@@ -46,7 +46,7 @@ productsRouter.post('/', administrador, (req, res) =>{
         let ahora = new Date();
         let fecha = ahora.getDate() + '/' + ( ahora.getMonth() + 1 ) + '/' + ahora.getFullYear() + ' ' + ahora.getHours() + ':' + ahora.getMinutes() + ':' + ahora.getSeconds();
         let product = {
-            id:req.body.id,
+            id:0,
             timestamp:fecha,
             title:req.body.title,
             description:req.body.description,
