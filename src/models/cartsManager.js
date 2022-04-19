@@ -9,7 +9,7 @@ export default class Carts {
     }    
     
     createCart = () =>{
-        let cid = this.carts.length+1;
+        let cid = this.carts.length;
         this.carts.push(`files/cart_${cid}.txt`)
         try {
             let ahora = new Date();
@@ -19,7 +19,7 @@ export default class Carts {
                 timestamp:fecha,
                 products:[]
             }
-            fs.promises.writeFile(this.carts[cid-1],JSON.stringify(obj,null,'\t'));
+            fs.promises.writeFile(this.carts[cid],JSON.stringify(obj,null,'\t'));
             return cid;
         }
         catch (err) {
@@ -29,11 +29,11 @@ export default class Carts {
 
     deleteCart = (cid) =>{
         try {
-            fs.unlink(this.carts[cid-1],error =>{
+            fs.unlink(this.carts[cid],error =>{
                 if (error) throw new Error(error)
                 else {
-                    console.log ("se borro correctamente el archivo " + this.carts[cid-1]);
-                    this.carts[cid-1] = "";
+                    console.log ("se borro correctamente el archivo " + this.carts[cid]);
+                    this.carts[cid] = "";
                 }
             })
         }
@@ -43,7 +43,7 @@ export default class Carts {
     }
 
     getAllProducts = (cid) =>{
-        let data = fs.readFileSync(this.carts[cid-1],'utf-8');
+        let data = fs.readFileSync(this.carts[cid],'utf-8');
         let contenido = JSON.parse(data);
         return contenido.products
     }
@@ -51,7 +51,7 @@ export default class Carts {
     async addProduct(cid,pid,quantity){
         let i=0;
         let exist = false;
-        let data = await fs.promises.readFile(this.carts[cid-1],'utf-8');
+        let data = await fs.promises.readFile(this.carts[cid],'utf-8');
         let contenido = JSON.parse(data);
         while (i < contenido.products.length && exist === false)
             if (pid === contenido.products[i].id){
@@ -65,17 +65,17 @@ export default class Carts {
             };
             contenido.products.push(prod);
         }
-        await fs.promises.writeFile(this.carts[cid-1],JSON.stringify(contenido,null,'\t'));
+        await fs.promises.writeFile(this.carts[cid],JSON.stringify(contenido,null,'\t'));
                  
         
         
     }
 
     deleteProduct = (cid,pid) => {
-        let data = fs.readFileSync(this.carts[cid-1],'utf-8');
+        let data = fs.readFileSync(this.carts[cid],'utf-8');
         let contenido = JSON.parse(data);
         contenido.products = contenido.products.filter((prod) => (prod.id !== parseInt(pid)));
-        fs.writeFileSync(this.carts[cid-1],JSON.stringify(contenido,null,'\t'));
+        fs.writeFileSync(this.carts[cid],JSON.stringify(contenido,null,'\t'));
     }
 }
 
